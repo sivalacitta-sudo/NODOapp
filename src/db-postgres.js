@@ -1,14 +1,33 @@
 const { Pool } = require('pg');
 
-// 从环境变量获取数据库连接字符串
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
-});
+let pool = null;
+
+// 获取数据库连接池（延迟初始化）
+function getPool() {
+  if (!pool) {
+    const connectionString = process.env.DATABASE_URL;
+    
+    if (!connectionString) {
+      throw new Error('DATABASE_URL 环境变量未设置');
+    }
+    
+    pool = new Pool({
+      connectionString: connectionString,
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+    });
+    
+    // 监听连接错误
+    pool.on('error', (err) => {
+      console.error('Unexpected error on idle client', err);
+    });
+  }
+  
+  return pool;
+}
 
 // 初始化数据表
 async function initDatabase() {
-  const client = await pool.connect();
+  const client = await getPool().connect();
   try {
     // 创建 users 表
     await client.query(`
@@ -41,7 +60,7 @@ async function initDatabase() {
 const db = {
   run: async (sql, params, callback) => {
     try {
-      const result = await pool.query(sql, params);
+      const result = await getPool().query(sql, params);
       if (callback) {
         callback.call({ lastID: result.rows[0]?.id }, null);
       }
@@ -52,7 +71,7 @@ const db = {
   
   get: async (sql, params, callback) => {
     try {
-      const result = await pool.query(sql, params);
+      const result = await getPool().query(sql, params);
       if (callback) callback(null, result.rows[0] || null);
     } catch (err) {
       if (callback) callback(err);
@@ -61,7 +80,7 @@ const db = {
   
   all: async (sql, params, callback) => {
     try {
-      const result = await pool.query(sql, params);
+      const result = await getPool().query(sql, params);
       if (callback) callback(null, result.rows);
     } catch (err) {
       if (callback) callback(err);
