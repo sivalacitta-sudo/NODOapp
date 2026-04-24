@@ -1,0 +1,262 @@
+/* Notion 风格样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Inter, -apple-system, system-ui, Segoe UI, Helvetica, Arial, sans-serif;
+    background: #ffffff;
+    color: rgba(0, 0, 0, 0.95);
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1.0;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+/* Tab 切换 */
+.tab-container {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tab-btn {
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.6);
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-btn.active {
+    color: #0075de;
+    border-bottom-color: #0075de;
+}
+
+.tab-btn:hover {
+    color: #0075de;
+}
+
+/* 表单 */
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #0075de;
+}
+
+/* 按钮 */
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: #0075de;
+    color: white;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: #005bab;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* 用户信息栏 */
+.user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
+}
+
+#user-info {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* 添加待办 */
+.add-todo {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.add-todo input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+}
+
+.add-todo input:focus {
+    border-color: #0075de;
+}
+
+.add-todo .btn-primary {
+    width: auto;
+}
+
+/* 统计栏 */
+.stats {
+    display: flex;
+    gap: 16px;
+    padding: 12px 0;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+}
+
+.stats strong {
+    color: #0075de;
+}
+
+/* 待办列表 */
+#todo-list {
+    list-style: none;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    transition: all 0.2s;
+}
+
+.todo-item:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.todo-checkbox {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    cursor: pointer;
+    accent-color: #0075de;
+}
+
+.todo-text {
+    flex: 1;
+    font-size: 16px;
+}
+
+.todo-item.completed .todo-text {
+    text-decoration: line-through;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.todo-delete {
+    background: transparent;
+    border: none;
+    color: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.todo-delete:hover {
+    background: rgba(255, 0, 0, 0.1);
+    color: #ff0000;
+}
+
+/* Toast 提示 */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* 响应式 */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 32px;
+    }
+    
+    .container {
+        margin: 20px auto;
+    }
+}
