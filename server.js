@@ -1,7 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const pathModule = require('path');
-const { initDatabase } = require('./src/db');
+
+// 根据环境变量选择数据库
+const isProduction = process.env.NODE_ENV === 'production';
+const dbModule = isProduction ? './src/db-postgres' : './src/db';
+const { initDatabase } = require(dbModule);
+
 const authRoutes = require('./src/routes/authRoutes');
 const todoRoutes = require('./src/routes/todoRoutes');
 
@@ -23,6 +28,7 @@ async function startServer() {
     // 初始化数据库
     await initDatabase();
     console.log('数据库初始化成功');
+    console.log(`运行环境: ${isProduction ? '生产环境 (PostgreSQL)' : '开发环境 (SQLite)'}`);
 
     // 启动监听
     app.listen(PORT, () => {
