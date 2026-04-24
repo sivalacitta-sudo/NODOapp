@@ -4,8 +4,17 @@ const pathModule = require('path');
 
 // 根据环境变量选择数据库
 const isProduction = process.env.NODE_ENV === 'production';
-const dbModule = isProduction ? './src/db-postgres' : './src/db';
-const { initDatabase } = require(dbModule);
+
+let initDatabase;
+if (isProduction) {
+  // 生产环境使用 PostgreSQL
+  const dbModule = require('./src/db-postgres');
+  initDatabase = dbModule.initDatabase;
+} else {
+  // 开发环境使用 SQLite
+  const dbModule = require('./src/db');
+  initDatabase = dbModule.initDatabase;
+}
 
 const authRoutes = require('./src/routes/authRoutes');
 const todoRoutes = require('./src/routes/todoRoutes');
